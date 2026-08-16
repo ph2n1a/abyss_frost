@@ -1,0 +1,15 @@
+name: network_prober
+description: Local plugin for probe network
+version: 1.0.0
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.devnetspace.abyss_frost.network_prober
+        pluginClass: NetworkProberPlugin
