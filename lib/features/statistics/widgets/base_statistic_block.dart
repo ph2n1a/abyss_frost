@@ -91,8 +91,8 @@ class BaseStatisticBlock extends StatelessWidget {
           ),
           Container(
             width: 152,
-            margin: EdgeInsets.all(4),
-            padding: EdgeInsets.all(3),
+            margin: const EdgeInsets.all(4),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
             decoration: BoxDecoration(
               color: appColors.backColor,
               borderRadius: BorderRadius.circular(10),
@@ -100,10 +100,13 @@ class BaseStatisticBlock extends StatelessWidget {
             child: Center(
               child: Text(
                 additionalText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13,
-                    color: appColors.mainColor
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: appColors.mainColor,
                 ),
               ),
             ),

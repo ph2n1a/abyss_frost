@@ -37,7 +37,7 @@ class _StatisticsChartWidgetState extends State<StatisticsChartWidget> {
   bool _isDragging = false;
   final GlobalKey _chartKey = GlobalKey();
   final Map<int, Offset> _activePointers = <int, Offset>{};
-  static const double _leftTitlesReservedSize = 42.0;
+  static const double _leftTitlesReservedSize = 52.0;
   static const double _minStablePinchSpan = 24.0;
 
   double get _periodStart => 0.0;
@@ -352,16 +352,19 @@ class _StatisticsChartWidgetState extends State<StatisticsChartWidget> {
   }
 
   double _getMaxY() {
-    final spots = _convertToSpots()
+    final visibleSpots = _convertToSpots()
         .where((s) => s.x >= _minX && s.x <= _maxX)
         .toList();
-    if (spots.isEmpty) {
-      return widget.stats.maxPingMs == null
-          ? 200
-          : ((widget.stats.maxPingMs! / 50).ceil() * 50).toDouble() + 50;
+
+    final double maxVisible;
+    if (visibleSpots.isEmpty) {
+      maxVisible = widget.stats.maxPingMs?.toDouble() ?? 150;
+    } else {
+      maxVisible = visibleSpots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
     }
-    final maxVisible = spots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
-    return ((maxVisible / 100).ceil() * 100).toDouble() + 50;
+
+    final niceMax = ((maxVisible + 50) / 100).ceil() * 100.0;
+    return niceMax < 100 ? 100 : niceMax;
   }
 
   double _xInterval() {
@@ -546,13 +549,18 @@ class _StatisticsChartWidgetState extends State<StatisticsChartWidget> {
                           showTitles: true,
                           interval: 100,
                           reservedSize: _leftTitlesReservedSize,
-                          getTitlesWidget: (value, meta) => Text(
-                            '${value.toInt()} ms',
-                            style: TextStyle(
-                              color: widget.mediumColor,
-                              fontSize: 11,
-                            ),
-                          ),
+                          getTitlesWidget: (value, meta) {
+                            if (value.remainder(100).abs() > 0.001) {
+                              return const SizedBox.shrink();
+                            }
+                            return Text(
+                              '${value.toInt()} ms',
+                              style: TextStyle(
+                                color: widget.mediumColor,
+                                fontSize: 11,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       topTitles: const AxisTitles(

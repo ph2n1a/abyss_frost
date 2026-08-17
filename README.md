@@ -3,8 +3,8 @@
 
 As you probably know, Russia has recently introduced whitelist restrictions for mobile internet access. They keep popping up and down, and it's unclear when the internet will actually be available. That's why I created this app. Its main function is to send a notification when the normal internet is enabled.[^1]
 
-<div align="center">
-  <p align="center"><img src="assets/github/app_screen.jpg" width="600" alt="screenshot" /></p>
+<div>
+  <p><img src="assets/github/app_screen.jpg" width="600" alt="screenshot" /></p>
 </div>
 
 The app also has a bunch of other features:

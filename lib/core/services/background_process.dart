@@ -43,7 +43,7 @@ class PingTaskHandler extends TaskHandler {
   String _pingMethod = pingMethodHead;
   List<String> _targetsUrl = [];
   List<String> _targetsUrlTags = [];
-  int _intervalSeconds = 60;
+  int _intervalSeconds = 90;
 
   String _proxyHost = '';
   int _proxyPort = 8080;
@@ -240,7 +240,7 @@ class PingTaskHandler extends TaskHandler {
       print('$_logTag 📊 Result ${i + 1}: url=${r.url}, status=${r.statusCode}, error=${r.error}, latency=${r.latencyMs}ms');
     }
 
-    final notificationsEnabled = prefs.getBool('message') ?? false;
+    final notificationsEnabled = prefs.getBool('message') ?? true;
     print('$_logTag 🔔 Notifications enabled: $notificationsEnabled (key: "message")');
 
     // Попробуем альтернативные ключи
@@ -382,7 +382,7 @@ class PingTaskHandler extends TaskHandler {
     _pingMethod = prefs.getString('ping_method') ?? pingMethodHead;
     _doNotAnalyzeWiFi = prefs.getBool('do_not_analyze_wifi') ?? true;
     _ignoreSslErrors = prefs.getBool('ignore_ssl_errors') ?? false;
-    _intervalSeconds = prefs.getInt('how_often_ping') ?? 60;
+    _intervalSeconds = prefs.getInt('how_often_ping') ?? 90;
 
     final urls = prefs.getStringList('targets_URL') ?? [];
     final tags = prefs.getStringList('targets_URL_tags') ?? [];
